@@ -1,0 +1,16 @@
+[book]
+title = "Sage"
+authors = ["Sage Contributors"]
+description = "A programming language where agents are first-class citizens"
+language = "en"
+src = "src"
+
+[build]
+build-dir = "book"
+
+[output.html]
+default-theme = "rust"
+preferred-dark-theme = "ayu"
+git-repository-url = "https://github.com/sagelang/sage"
+edit-url-template = "https://github.com/sagelang/sage/edit/main/guide/{path}"
+site-url = "/sage/"
