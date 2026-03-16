@@ -13,6 +13,7 @@
 - [Basic Syntax](./language/syntax.md)
 - [Types](./language/types.md)
 - [Functions](./language/functions.md)
+- [Generics](./language/generics.md)
 - [Control Flow](./language/control-flow.md)
 
 # Agents

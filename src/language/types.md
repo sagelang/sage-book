@@ -125,6 +125,17 @@ let person = Person { name: "Alice", age: 30 };
 print(person.name);
 ```
 
+Records can also be generic. See [Generics](./generics.md) for details:
+
+```sage
+record Pair<A, B> {
+    first: A,
+    second: B,
+}
+
+let pair = Pair { first: 42, second: "hello" };
+```
+
 ### Enums
 
 Define types with a fixed set of variants:
@@ -171,6 +182,17 @@ enum Message {
 let success = Result::Ok(42);
 let failure = Result::Err("not found");
 let msg = Message::Pair(1, "hello");
+```
+
+Enums can also be generic. See [Generics](./generics.md) for details:
+
+```sage
+enum Either<L, R> {
+    Left(L),
+    Right(R),
+}
+
+let e = Either::<String, Int>::Left("error");
 ```
 
 ### Match Expressions

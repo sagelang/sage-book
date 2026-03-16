@@ -38,6 +38,25 @@ fn print_message(msg: String) -> Unit {
 
 Use `Unit` for functions that don't return a meaningful value.
 
+## Generic Functions
+
+Functions can have type parameters, making them work with any type:
+
+```sage
+fn identity<T>(x: T) -> T {
+    return x;
+}
+
+fn swap<A, B>(pair: (A, B)) -> (B, A) {
+    return (pair.1, pair.0);
+}
+
+let x = identity(42);       // T inferred as Int
+let y = identity("hello");  // T inferred as String
+```
+
+See [Generics](./generics.md) for comprehensive coverage.
+
 ## Recursion
 
 Functions can call themselves:
