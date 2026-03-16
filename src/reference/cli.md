@@ -256,7 +256,7 @@ sage trace <subcommand> <file>
 | `pretty` | Pretty-print trace events in human-readable format |
 | `summary` | Show summary with agent timeline, totals, and durations |
 | `filter --agent <name>` | Filter trace events by agent name |
-| `infer` | Show all LLM inference calls with durations |
+| `divine` | Show all LLM inference calls with durations |
 | `cost` | Estimate token costs from inference calls (experimental) |
 
 ### Examples

@@ -12,11 +12,11 @@ agent Fetcher {
 
     on start {
         let response = try Http.get("https://httpbin.org/get");
-        emit(response.status);
+        yield(response.status);
     }
 
     on error(e) {
-        emit(-1);
+        yield(-1);
     }
 }
 

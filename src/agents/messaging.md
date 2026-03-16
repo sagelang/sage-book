@@ -18,12 +18,12 @@ agent Worker receives WorkerMsg {
 
     on start {
         // This agent can now receive WorkerMsg messages
-        emit(0);
+        yield(0);
     }
 }
 ```
 
-Agents without a `receives` clause are pure spawn/await agents and cannot receive messages.
+Agents without a `receives` clause are pure summon/await agents and cannot receive messages.
 
 ## The `receive()` Expression
 
@@ -40,7 +40,7 @@ agent Worker receives WorkerMsg {
             Ping => print("Pinged"),
             Shutdown => print("Shutting down"),
         }
-        emit(0);
+        yield(0);
     }
 }
 ```
@@ -54,15 +54,15 @@ Send a message to a running agent using its handle. `send` is fallible (the agen
 ```sage
 agent Main {
     on start {
-        let w = spawn Worker { id: 1 };
+        let w = summon Worker { id: 1 };
         try send(w, Task);
         try send(w, Shutdown);
         try await w;
-        emit(0);
+        yield(0);
     }
 
     on error(e) {
-        emit(1);
+        yield(1);
     }
 }
 
@@ -84,7 +84,7 @@ agent Worker receives WorkerMsg {
             let msg: WorkerMsg = receive();
             match msg {
                 Task => {
-                    let result = try infer("Process a task");
+                    let result = try divine("Process a task");
                     print("Worker {self.id}: {result}");
                 }
                 Ping => {
@@ -95,12 +95,12 @@ agent Worker receives WorkerMsg {
                 }
             }
         }
-        emit(0);
+        yield(0);
     }
 
     on error(e) {
         print("Worker {self.id} failed: " ++ e);
-        emit(1);
+        yield(1);
     }
 }
 ```
@@ -121,7 +121,7 @@ agent Worker receives WorkerMsg {
             let msg: WorkerMsg = receive();
             match msg {
                 Task => {
-                    let result = try infer("Summarise something interesting");
+                    let result = try divine("Summarise something interesting");
                     print("Worker {self.id}: {result}");
                 }
                 Shutdown => {
@@ -129,19 +129,19 @@ agent Worker receives WorkerMsg {
                 }
             }
         }
-        emit(0);
+        yield(0);
     }
 
     on error(e) {
         print("Worker {self.id} failed");
-        emit(1);
+        yield(1);
     }
 }
 
 agent Coordinator {
     on start {
-        let w1 = spawn Worker { id: 1 };
-        let w2 = spawn Worker { id: 2 };
+        let w1 = summon Worker { id: 1 };
+        let w2 = summon Worker { id: 2 };
 
         // Distribute tasks
         try send(w1, Task);
@@ -157,12 +157,12 @@ agent Coordinator {
         try await w1;
         try await w2;
 
-        emit(0);
+        yield(0);
     }
 
     on error(e) {
         print("Coordination failed");
-        emit(1);
+        yield(1);
     }
 }
 
@@ -177,20 +177,20 @@ The compiler ensures type safety:
 agent Worker receives WorkerMsg {
     on start {
         let msg: WorkerMsg = receive();
-        emit(0);
+        yield(0);
     }
 }
 
 agent Main {
     on start {
-        let w = spawn Worker {};
+        let w = summon Worker {};
         try send(w, Task);       // OK - Task is a WorkerMsg variant
         try send(w, "hello");    // Error: expected WorkerMsg, got String
-        emit(0);
+        yield(0);
     }
 
     on error(e) {
-        emit(1);
+        yield(1);
     }
 }
 ```

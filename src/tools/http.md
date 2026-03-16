@@ -14,12 +14,12 @@ agent ApiClient {
         let response = try Http.get("https://api.example.com/data");
         print("Status: " ++ str(response.status));
         print("Body: " ++ response.body);
-        emit(response.status);
+        yield(response.status);
     }
 
     on error(e) {
         print("Request failed");
-        emit(-1);
+        yield(-1);
     }
 }
 
@@ -69,14 +69,14 @@ agent JsonFetcher {
     on start {
         let response = try Http.get(self.url);
         if response.status == 200 {
-            emit(response.body);
+            yield(response.body);
         } else {
-            emit("Error: " ++ str(response.status));
+            yield("Error: " ++ str(response.status));
         }
     }
 
     on error(e) {
-        emit("Request failed");
+        yield("Request failed");
     }
 }
 
@@ -92,11 +92,11 @@ agent DataPoster {
     on start {
         let payload = "{\"message\": \"Hello from Sage!\"}";
         let response = try Http.post("https://httpbin.org/post", payload);
-        emit(response.status);
+        yield(response.status);
     }
 
     on error(e) {
-        emit(-1);
+        yield(-1);
     }
 }
 
@@ -116,11 +116,11 @@ agent ResilientFetcher {
                 HttpResponse { status: 0, body: "", headers: {} }
             };
             if response.status == 200 {
-                emit(response.body);
+                yield(response.body);
                 return;
             }
         }
-        emit("All URLs failed");
+        yield("All URLs failed");
     }
 }
 

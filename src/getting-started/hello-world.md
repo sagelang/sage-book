@@ -10,7 +10,7 @@ Create a file called `hello.sg`:
 agent Main {
     on start {
         print("Hello from Sage!");
-        emit(0);
+        yield(0);
     }
 }
 
@@ -40,7 +40,7 @@ Let's break down this program:
 
 3. **`print("Hello from Sage!")`** — Prints a message to the console.
 
-4. **`emit(0)`** — Emits a value, signaling that the agent has finished. The emitted value becomes the agent's result.
+4. **`yield(0)`** — Emits a value, signaling that the agent has finished. The emitted value becomes the agent's result.
 
 5. **`run Main`** — Tells the compiler which agent to start. Every Sage program needs exactly one `run` statement.
 

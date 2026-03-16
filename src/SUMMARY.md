@@ -21,12 +21,12 @@
 - [What Are Agents?](./agents/overview.md)
 - [Agent State](./agents/beliefs.md)
 - [Event Handlers](./agents/handlers.md)
-- [Spawning & Awaiting](./agents/spawning.md)
+- [Spawning & Awaiting](./agents/summoning.md)
 - [Messaging](./agents/messaging.md)
 
 # LLM Integration
 
-- [The infer Expression](./llm/infer.md)
+- [The divine Expression](./llm/divine.md)
 - [Configuration](./llm/configuration.md)
 - [Patterns](./llm/patterns.md)
 

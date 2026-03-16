@@ -4,13 +4,13 @@ Agents respond to events through handlers. Each handler runs when its correspond
 
 ## on start
 
-Runs when the agent is spawned:
+Runs when the agent is summoned:
 
 ```sage
 agent Worker {
     on start {
         print("Worker started!");
-        emit(42);
+        yield(42);
     }
 }
 ```
@@ -26,13 +26,13 @@ agent Researcher {
     topic: String
 
     on start {
-        let result = try infer("Summarize: {self.topic}");
-        emit(result);
+        let result = try divine("Summarize: {self.topic}");
+        yield(result);
     }
 
     on error(e) {
         print("Research failed: " ++ e);
-        emit("unavailable");
+        yield("unavailable");
     }
 }
 ```
@@ -58,7 +58,7 @@ agent Worker receives Command {
                 Shutdown => break,
             }
         }
-        emit(0);
+        yield(0);
     }
 }
 ```
@@ -82,7 +82,7 @@ agent Calculator {
 
     on start {
         let result = self.a + self.b;
-        emit(result);  // Agent is done
+        yield(result);  // Agent is done
     }
 }
 ```
@@ -100,9 +100,9 @@ All `emit` calls in an agent must have the same type:
 agent Example {
     on start {
         if condition {
-            emit(42);      // Int
+            yield(42);      // Int
         } else {
-            emit("error"); // Error: expected Int, got String
+            yield("error"); // Error: expected Int, got String
         }
     }
 }
@@ -117,13 +117,13 @@ agent Example {
     on start {
         let x = 42;
         // x is only visible here
-        emit(0);
+        yield(0);
     }
 
     on error(e) {
         // x is not visible here
         // Use agent fields for persistent state
-        emit(1);
+        yield(1);
     }
 }
 ```

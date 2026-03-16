@@ -7,7 +7,7 @@ Agents are created with `spawn` and their results are retrieved with `await`.
 Creates a new agent and returns a handle:
 
 ```sage
-let worker = spawn Worker { task: "process data" };
+let worker = summon Worker { task: "process data" };
 ```
 
 The spawned agent starts running immediately and concurrently with the spawning agent.
@@ -15,7 +15,7 @@ The spawned agent starts running immediately and concurrently with the spawning 
 ### Spawn Syntax
 
 ```sage
-spawn AgentName { field1: value1, field2: value2 }
+summon AgentName { field1: value1, field2: value2 }
 ```
 
 All fields must be provided:
@@ -26,15 +26,15 @@ agent Point {
     y: Int
 
     on start {
-        emit(self.x + self.y);
+        yield(self.x + self.y);
     }
 }
 
 // Correct
-let p = spawn Point { x: 10, y: 20 };
+let p = summon Point { x: 10, y: 20 };
 
 // Error: missing field `y`
-let p = spawn Point { x: 10 };
+let p = summon Point { x: 10 };
 ```
 
 ### Agent Handle Type
@@ -44,11 +44,11 @@ let p = spawn Point { x: 10 };
 ```sage
 agent Worker {
     on start {
-        emit(42);  // Emits Int
+        yield(42);  // Emits Int
     }
 }
 
-let w: Agent<Int> = spawn Worker {};
+let w: Agent<Int> = summon Worker {};
 ```
 
 ## await
@@ -56,7 +56,7 @@ let w: Agent<Int> = spawn Worker {};
 Waits for an agent to emit its result. Since agents can fail, `await` is a fallible operation that requires `try`:
 
 ```sage
-let worker = spawn Worker {};
+let worker = summon Worker {};
 let result = try await worker;  // Blocks until Worker emits
 ```
 
@@ -67,20 +67,20 @@ let result = try await worker;  // Blocks until Worker emits
 ```sage
 agent StringWorker {
     on start {
-        emit("done");
+        yield("done");
     }
 }
 
 agent Main {
     on start {
-        let w = spawn StringWorker {};
+        let w = summon StringWorker {};
         let result: String = try await w;
         print(result);
-        emit(0);
+        yield(0);
     }
 
     on error(e) {
-        emit(1);
+        yield(1);
     }
 }
 
@@ -101,27 +101,27 @@ agent Sleeper {
 
     on start {
         sleep_ms(self.ms);
-        emit(self.ms);
+        yield(self.ms);
     }
 }
 
 agent Main {
     on start {
         // All three start immediately
-        let s1 = spawn Sleeper { ms: 100 };
-        let s2 = spawn Sleeper { ms: 200 };
-        let s3 = spawn Sleeper { ms: 300 };
+        let s1 = summon Sleeper { ms: 100 };
+        let s2 = summon Sleeper { ms: 200 };
+        let s3 = summon Sleeper { ms: 300 };
 
         // Total time: ~300ms (not 600ms)
         let r1 = try await s1;
         let r2 = try await s2;
         let r3 = try await s3;
 
-        emit(0);
+        yield(0);
     }
 
     on error(e) {
-        emit(1);
+        yield(1);
     }
 }
 
@@ -137,23 +137,23 @@ agent Researcher {
     topic: String
 
     on start {
-        let result = try infer(
+        let result = try divine(
             "One sentence about: {self.topic}"
         );
-        emit(result);
+        yield(result);
     }
 
     on error(e) {
-        emit("Research failed");
+        yield("Research failed");
     }
 }
 
 agent Coordinator {
     on start {
         // Fan out
-        let r1 = spawn Researcher { topic: "AI" };
-        let r2 = spawn Researcher { topic: "Robotics" };
-        let r3 = spawn Researcher { topic: "Quantum" };
+        let r1 = summon Researcher { topic: "AI" };
+        let r2 = summon Researcher { topic: "Robotics" };
+        let r3 = summon Researcher { topic: "Quantum" };
 
         // Fan in
         let s1 = try await r1;
@@ -163,12 +163,12 @@ agent Coordinator {
         print(s1);
         print(s2);
         print(s3);
-        emit(0);
+        yield(0);
     }
 
     on error(e) {
         print("A researcher failed");
-        emit(1);
+        yield(1);
     }
 }
 
@@ -185,7 +185,7 @@ agent Step1 {
 
     on start {
         let result = self.input ++ " -> step1";
-        emit(result);
+        yield(result);
     }
 }
 
@@ -194,24 +194,24 @@ agent Step2 {
 
     on start {
         let result = self.input ++ " -> step2";
-        emit(result);
+        yield(result);
     }
 }
 
 agent Main {
     on start {
-        let s1 = spawn Step1 { input: "start" };
+        let s1 = summon Step1 { input: "start" };
         let r1 = try await s1;
 
-        let s2 = spawn Step2 { input: r1 };
+        let s2 = summon Step2 { input: r1 };
         let r2 = try await s2;
 
         print(r2);  // "start -> step1 -> step2"
-        emit(0);
+        yield(0);
     }
 
     on error(e) {
-        emit(1);
+        yield(1);
     }
 }
 

@@ -287,7 +287,7 @@ agent Processor {
         let nums = [1, 2, 3];
         let result = transform_all(nums, |n: Int| n * 2);
         print(str(result));  // [2, 4, 6]
-        emit(0);
+        yield(0);
     }
 }
 

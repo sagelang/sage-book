@@ -262,19 +262,19 @@ A handle to a spawned agent that will emit a value of type `T`:
 ```sage
 agent Worker {
     on start {
-        emit(42);
+        yield(42);
     }
 }
 
 agent Main {
     on start {
-        let w: Agent<Int> = spawn Worker {};
+        let w: Agent<Int> = summon Worker {};
         let result: Int = try await w;
-        emit(result);
+        yield(result);
     }
 
     on error(e) {
-        emit(0);
+        yield(0);
     }
 }
 
@@ -286,10 +286,10 @@ run Main;
 The result of an LLM inference call:
 
 ```sage
-let summary = try infer("Summarize: {topic}");
+let summary = try divine("Summarize: {topic}");
 ```
 
-`Inferred<T>` can be used anywhere `T` is expected — the type coerces automatically.
+`Oracle<T>` can be used anywhere `T` is expected — the type coerces automatically.
 
 ## Type Inference
 
@@ -323,7 +323,7 @@ agent Worker {
     count: Int
 
     on start {
-        emit(self.count * 2);
+        yield(self.count * 2);
     }
 }
 ```

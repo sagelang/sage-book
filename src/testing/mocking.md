@@ -4,17 +4,17 @@ Sage's testing framework provides first-class mocking for both LLM calls and too
 
 ## Mocking LLM Calls
 
-You can specify exactly what `infer` calls should return using `mock infer`.
+You can specify exactly what `infer` calls should return using `mock divine`.
 
 ## Basic Mocking
 
-Use `mock infer -> value;` to specify what the next `infer` call should return:
+Use `mock divine -> value;` to specify what the next `infer` call should return:
 
 ```sage
 test "infer returns mocked value" {
-    mock infer -> "This is a mocked response";
+    mock divine -> "This is a mocked response";
 
-    let result: String = try infer("Summarise something");
+    let result: String = try divine("Summarise something");
     assert_eq(result, "This is a mocked response");
 }
 ```
@@ -27,13 +27,13 @@ When your test makes multiple `infer` calls, queue up multiple mocks in order:
 
 ```sage
 test "multiple infer calls" {
-    mock infer -> "First response";
-    mock infer -> "Second response";
-    mock infer -> "Third response";
+    mock divine -> "First response";
+    mock divine -> "Second response";
+    mock divine -> "Third response";
 
-    let r1 = try infer("Query 1");
-    let r2 = try infer("Query 2");
-    let r3 = try infer("Query 3");
+    let r1 = try divine("Query 1");
+    let r2 = try divine("Query 2");
+    let r3 = try divine("Query 3");
 
     assert_eq(r1, "First response");
     assert_eq(r2, "Second response");
@@ -54,12 +54,12 @@ record Summary {
 }
 
 test "structured infer returns typed mock" {
-    mock infer -> Summary {
+    mock divine -> Summary {
         text: "Quantum computing is fast.",
         confidence: 0.88
     };
 
-    let summary: Summary = try infer("Summarise quantum computing");
+    let summary: Summary = try divine("Summarise quantum computing");
     assert_eq(summary.text, "Quantum computing is fast.");
     assert_gt(summary.confidence, 0.8);
 }
@@ -71,9 +71,9 @@ Use `fail("message")` to mock an `infer` failure:
 
 ```sage
 test "agent handles infer failure" {
-    mock infer -> fail("rate limit exceeded");
+    mock divine -> fail("rate limit exceeded");
 
-    let handle = spawn ResilientResearcher { topic: "test" };
+    let handle = summon ResilientResearcher { topic: "test" };
     let result = await handle;
 
     // Agent's fallback behaviour
@@ -92,33 +92,33 @@ agent Researcher {
     topic: String
 
     on start {
-        let summary = try infer("Research: {self.topic}");
-        emit(summary);
+        let summary = try divine("Research: {self.topic}");
+        yield(summary);
     }
 
     on error(e) {
-        emit("Research failed");
+        yield("Research failed");
     }
 }
 
 test "researcher emits summary" {
-    mock infer -> "Quantum computing uses qubits.";
+    mock divine -> "Quantum computing uses qubits.";
 
-    let result = await spawn Researcher { topic: "quantum" };
+    let result = await summon Researcher { topic: "quantum" };
     assert_eq(result, "Quantum computing uses qubits.");
 }
 ```
 
 ## Testing Multi-Agent Systems
 
-For agents that spawn other agents, each agent's `infer` calls consume mocks in execution order:
+For agents that summon other agents, each agent's `infer` calls consume mocks in execution order:
 
 ```sage
 test "coordinator gets results from two researchers" {
-    mock infer -> "Summary about AI";
-    mock infer -> "Summary about robots";
+    mock divine -> "Summary about AI";
+    mock divine -> "Summary about robots";
 
-    let c = spawn Coordinator {
+    let c = summon Coordinator {
         topics: ["AI", "robots"]
     };
     let results = await c;
@@ -175,7 +175,7 @@ test "handles network error gracefully" {
 
 ### Multiple Tool Mocks
 
-Like `mock infer`, tool mocks are consumed in FIFO order:
+Like `mock divine`, tool mocks are consumed in FIFO order:
 
 ```sage
 test "multiple http calls" {
@@ -198,9 +198,9 @@ You can mock different tools in the same test:
 test "agent uses multiple tools" {
     mock tool Http.get -> HttpResponse { status: 200, body: "data", headers: {} };
     mock tool Fs.read -> "config content";
-    mock infer -> "processed result";
+    mock divine -> "processed result";
 
-    let result = await spawn DataProcessor {};
+    let result = await summon DataProcessor {};
     assert_eq(result, "processed result");
 }
 ```
@@ -217,7 +217,7 @@ agent Fetcher {
 
     on start {
         let response = try Http.get(self.url);
-        emit(response.body);
+        yield(response.body);
     }
 }
 
@@ -228,7 +228,7 @@ test "fetcher returns body" {
         headers: {}
     };
 
-    let result = await spawn Fetcher { url: "https://example.com" };
+    let result = await summon Fetcher { url: "https://example.com" };
     assert_eq(result, "fetched content");
 }
 ```

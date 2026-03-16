@@ -64,19 +64,19 @@ agent Summariser {
     topic: String
 
     on start {
-        let summary = try infer("Summarise: {self.topic}");
-        emit(summary);
+        let summary = try divine("Summarise: {self.topic}");
+        yield(summary);
     }
 
     on error(e) {
-        emit("Error occurred");
+        yield("Error occurred");
     }
 }
 
 test "summariser returns LLM response" {
-    mock infer -> "This is a summary of quantum physics.";
+    mock divine -> "This is a summary of quantum physics.";
 
-    let result = await spawn Summariser { topic: "quantum physics" };
+    let result = await summon Summariser { topic: "quantum physics" };
     assert_eq(result, "This is a summary of quantum physics.");
 }
 ```
@@ -87,11 +87,11 @@ Test bodies are async by default — you can use `await` and `spawn` without spe
 
 ```sage
 test "two agents can run concurrently" {
-    mock infer -> "Result A";
-    mock infer -> "Result B";
+    mock divine -> "Result A";
+    mock divine -> "Result B";
 
-    let a = spawn Researcher { topic: "A" };
-    let b = spawn Researcher { topic: "B" };
+    let a = summon Researcher { topic: "A" };
+    let b = summon Researcher { topic: "B" };
 
     let result_a = await a;
     let result_b = await b;

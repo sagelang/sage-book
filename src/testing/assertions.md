@@ -125,9 +125,9 @@ Assert that an expression produces an error:
 
 ```sage
 test "agent handles error correctly" {
-    mock infer -> fail("simulated failure");
+    mock divine -> fail("simulated failure");
 
-    let handle = spawn Summariser { topic: "test" };
+    let handle = summon Summariser { topic: "test" };
     assert_fails(await handle);
 }
 ```

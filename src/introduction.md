@@ -9,33 +9,33 @@ agent Researcher {
     topic: String
 
     on start {
-        let summary = try infer(
+        let summary = try divine(
             "Write a concise 2-sentence summary of: {self.topic}"
         );
-        emit(summary);
+        yield(summary);
     }
 
     on error(e) {
-        emit("Research unavailable");
+        yield("Research unavailable");
     }
 }
 
 agent Coordinator {
     on start {
-        let r1 = spawn Researcher { topic: "quantum computing" };
-        let r2 = spawn Researcher { topic: "CRISPR gene editing" };
+        let r1 = summon Researcher { topic: "quantum computing" };
+        let r2 = summon Researcher { topic: "CRISPR gene editing" };
 
         let s1 = try await r1;
         let s2 = try await r2;
 
         print(s1);
         print(s2);
-        emit(0);
+        yield(0);
     }
 
     on error(e) {
         print("A researcher failed");
-        emit(1);
+        yield(1);
     }
 }
 
@@ -60,8 +60,8 @@ This guide covers:
 
 1. **Getting Started** — Install Sage and write your first program
 2. **Language Guide** — Syntax, types, and control flow
-3. **Agents** — State, handlers, spawning, and messaging
-4. **LLM Integration** — Using `infer` to call language models
+3. **Agents** — State, handlers, summoning, and messaging
+4. **LLM Integration** — Using `divine` to call language models
 5. **Tools** — Built-in tools like HTTP for external services
 6. **Testing** — Write tests with first-class LLM mocking
 7. **Reference** — CLI commands, environment variables, error codes

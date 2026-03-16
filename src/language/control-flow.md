@@ -87,7 +87,7 @@ agent Worker receives WorkerMsg {
                 Task => process_task(),
             }
         }
-        emit(0);
+        yield(0);
     }
 }
 ```
@@ -130,7 +130,7 @@ agent Main {
             print(fizzbuzz(i));
             i = i + 1;
         }
-        emit(0);
+        yield(0);
     }
 }
 

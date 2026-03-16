@@ -72,7 +72,7 @@ error: undefined variable 'foo'
 error: unknown agent 'Worker'
   --> hello.sg:10:22
   |
-10 |     let w = spawn Worker {};
+10 |     let w = summon Worker {};
    |                   ^^^^^^ agent not defined
 ```
 
@@ -84,14 +84,14 @@ error: unknown agent 'Worker'
 error: missing field 'name'
   --> hello.sg:15:22
   |
-15 |     let g = spawn Greeter {};
+15 |     let g = summon Greeter {};
    |                   ^^^^^^^^^ field 'name' not provided
 ```
 
 **Fix**: Provide all required fields when spawning:
 
 ```sage
-let g = spawn Greeter { name: "World" };
+let g = summon Greeter { name: "World" };
 ```
 
 ### Unhandled fallible operation (E013)
@@ -100,7 +100,7 @@ let g = spawn Greeter { name: "World" };
 error[E013]: fallible operation must be handled
   --> hello.sg:5:15
   |
-5 |     let x = infer("prompt");
+5 |     let x = divine("prompt");
   |             ^^^^^^^^^^^^^^^ this can fail
   |
   = help: use 'try' to propagate or 'catch' to handle inline
@@ -110,10 +110,10 @@ error[E013]: fallible operation must be handled
 
 ```sage
 // Propagate to on error handler
-let x = try infer("prompt");
+let x = try divine("prompt");
 
 // Or handle inline
-let x = catch infer("prompt") {
+let x = catch divine("prompt") {
     "fallback"
 };
 ```

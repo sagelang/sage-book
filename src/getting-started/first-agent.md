@@ -25,29 +25,29 @@ agent Researcher {
     topic: String
 
     on start {
-        let summary = try infer(
+        let summary = try divine(
             "Write a concise 2-sentence summary of: {self.topic}"
         );
         print(summary);
-        emit(summary);
+        yield(summary);
     }
 
     on error(e) {
-        emit("Research failed");
+        yield("Research failed");
     }
 }
 
 agent Main {
     on start {
-        let r = spawn Researcher { topic: "the Rust programming language" };
+        let r = summon Researcher { topic: "the Rust programming language" };
         let result = try await r;
         print("Research complete!");
-        emit(0);
+        yield(0);
     }
 
     on error(e) {
         print("Something went wrong");
-        emit(1);
+        yield(1);
     }
 }
 
@@ -72,39 +72,39 @@ Research complete!
 
 1. **`topic: String`** — The `Researcher` agent has a field called `topic`. Fields are the agent's state, initialized when spawned.
 
-2. **`try infer("...")`** — Calls the LLM with the given prompt. The `{self.topic}` syntax interpolates the agent's field into the prompt. The `try` propagates errors to `on error`.
+2. **`try divine("...")`** — Calls the LLM with the given prompt. The `{self.topic}` syntax interpolates the agent's field into the prompt. The `try` propagates errors to `on error`.
 
 3. **`on error(e)`** — Handles errors from `try` expressions. Without this, the agent would panic on failure.
 
-4. **`spawn Researcher { topic: "..." }`** — Creates a new `Researcher` agent with the given field value.
+4. **`summon Researcher { topic: "..." }`** — Creates a new `Researcher` agent with the given field value.
 
 5. **`try await r`** — Waits for the agent to emit its result. The spawned agent runs concurrently until awaited.
 
 ## Multiple Agents
 
-Let's spawn multiple researchers in parallel:
+Let's summon multiple researchers in parallel:
 
 ```sage
 agent Researcher {
     topic: String
 
     on start {
-        let summary = try infer(
+        let summary = try divine(
             "One sentence about: {self.topic}"
         );
-        emit(summary);
+        yield(summary);
     }
 
     on error(e) {
-        emit("Research unavailable");
+        yield("Research unavailable");
     }
 }
 
 agent Main {
     on start {
-        let r1 = spawn Researcher { topic: "quantum computing" };
-        let r2 = spawn Researcher { topic: "machine learning" };
-        let r3 = spawn Researcher { topic: "blockchain" };
+        let r1 = summon Researcher { topic: "quantum computing" };
+        let r2 = summon Researcher { topic: "machine learning" };
+        let r3 = summon Researcher { topic: "blockchain" };
 
         // All three run concurrently
         let s1 = try await r1;
@@ -114,11 +114,11 @@ agent Main {
         print(s1);
         print(s2);
         print(s3);
-        emit(0);
+        yield(0);
     }
 
     on error(e) {
-        emit(1);
+        yield(1);
     }
 }
 

@@ -129,7 +129,7 @@ Functions that can fail are marked with `fails`:
 
 ```sage
 fn risky_operation() -> Int fails {
-    let value = try infer("Give me a number");
+    let value = try divine("Give me a number");
     return parse_int(value);
 }
 ```
@@ -140,11 +140,11 @@ Callers must handle errors with `try` or `catch`:
 agent Main {
     on start {
         let result = try risky_operation();
-        emit(result);
+        yield(result);
     }
 
     on error(e) {
-        emit(0);
+        yield(0);
     }
 }
 
@@ -185,7 +185,7 @@ agent Main {
     on start {
         let result = summarize_list(["apple", "banana", "cherry"]);
         print(result);
-        emit(0);
+        yield(0);
     }
 }
 
