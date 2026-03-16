@@ -79,7 +79,7 @@ sage build program.sg
 | Option | Description |
 |--------|-------------|
 | `--release` | Build with optimizations |
-| `-o, --output <dir>` | Output directory (default: `target/sage`) |
+| `-o, --output <dir>` | Output directory (default: `hearth`) |
 | `--emit-rust` | Only generate Rust code, don't compile |
 
 ### Examples
@@ -103,7 +103,7 @@ sage build hello.sg --emit-rust
 After building, you'll find:
 
 ```
-target/sage/
+hearth/
   hello/
     main.rs      # Generated Rust code
     hello        # Native binary (if not --emit-rust)
