@@ -1,6 +1,10 @@
-# Mocking LLM Calls
+# Mocking
 
-The most powerful feature of Sage's testing framework is first-class LLM mocking. In test files, you can specify exactly what `infer` calls should return, making your tests deterministic and fast.
+Sage's testing framework provides first-class mocking for both LLM calls and tool calls. This makes your tests deterministic, fast, and independent of external services.
+
+## Mocking LLM Calls
+
+You can specify exactly what `infer` calls should return using `mock infer`.
 
 ## Basic Mocking
 
@@ -134,9 +138,105 @@ Error: infer called with no mock available (E054)
 
 Always provide enough mocks for all `infer` calls in your test.
 
+## Mocking Tool Calls
+
+Just like LLM calls, you can mock tool calls (Http, Fs, etc.) to avoid real network or filesystem operations in tests.
+
+### Basic Tool Mocking
+
+Use `mock tool ToolName.method -> value;` to specify what a tool call should return:
+
+```sage
+test "http get returns mocked response" {
+    mock tool Http.get -> HttpResponse {
+        status: 200,
+        body: "Hello, World!",
+        headers: {}
+    };
+
+    let response = try Http.get("https://example.com");
+    assert_eq(response.status, 200);
+    assert_eq(response.body, "Hello, World!");
+}
+```
+
+### Mocking Tool Failures
+
+Use `fail("message")` to mock a tool failure:
+
+```sage
+test "handles network error gracefully" {
+    mock tool Http.get -> fail("connection timeout");
+
+    let result = catch Http.get("https://example.com");
+    assert_true(result.is_err());
+}
+```
+
+### Multiple Tool Mocks
+
+Like `mock infer`, tool mocks are consumed in FIFO order:
+
+```sage
+test "multiple http calls" {
+    mock tool Http.get -> HttpResponse { status: 200, body: "first", headers: {} };
+    mock tool Http.get -> HttpResponse { status: 200, body: "second", headers: {} };
+
+    let r1 = try Http.get("https://api.example.com/1");
+    let r2 = try Http.get("https://api.example.com/2");
+
+    assert_eq(r1.body, "first");
+    assert_eq(r2.body, "second");
+}
+```
+
+### Mocking Different Tools
+
+You can mock different tools in the same test:
+
+```sage
+test "agent uses multiple tools" {
+    mock tool Http.get -> HttpResponse { status: 200, body: "data", headers: {} };
+    mock tool Fs.read -> "config content";
+    mock infer -> "processed result";
+
+    let result = await spawn DataProcessor {};
+    assert_eq(result, "processed result");
+}
+```
+
+### Testing Agents with Tool Mocks
+
+When testing agents that use tools, mocks are consumed by the agent's tool calls:
+
+```sage
+agent Fetcher {
+    url: String
+
+    use Http
+
+    on start {
+        let response = try Http.get(self.url);
+        emit(response.body);
+    }
+}
+
+test "fetcher returns body" {
+    mock tool Http.get -> HttpResponse {
+        status: 200,
+        body: "fetched content",
+        headers: {}
+    };
+
+    let result = await spawn Fetcher { url: "https://example.com" };
+    assert_eq(result, "fetched content");
+}
+```
+
 ## Best Practices
 
 1. **One assertion per test** — easier to identify failures
 2. **Descriptive mock values** — make it clear what's being tested
 3. **Test error paths** — use `fail()` to test error handling
 4. **Keep mocks simple** — avoid complex JSON in mocks when possible
+5. **Mock all external calls** — both `infer` and tool calls should be mocked for deterministic tests

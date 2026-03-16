@@ -39,7 +39,7 @@
 - [Overview](./testing/overview.md)
 - [Writing Tests](./testing/writing-tests.md)
 - [Assertions](./testing/assertions.md)
-- [Mocking LLMs](./testing/mocking.md)
+- [Mocking](./testing/mocking.md)
 
 # Editors
 
