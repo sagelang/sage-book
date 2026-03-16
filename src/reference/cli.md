@@ -14,7 +14,7 @@ This creates:
 
 ```
 my_project/
-├── sage.toml           # Project manifest
+├── grove.toml          # Project manifest
 └── src/
     └── main.sg         # Entry point with example code
 ```
@@ -229,7 +229,7 @@ Path dependencies are useful for:
 - Local development of dependencies
 - Testing changes before publishing
 
-Path dependencies are resolved relative to the project root (where `sage.toml` is located).
+Path dependencies are resolved relative to the project root (where `grove.toml` is located).
 
 ## sage update
 
@@ -239,7 +239,7 @@ Update dependencies to their latest versions:
 sage update
 ```
 
-This fetches the latest commits for git dependencies and updates `sage-lock.toml`.
+This fetches the latest commits for git dependencies and updates `grove.lock`.
 
 ## sage trace
 

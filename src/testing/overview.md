@@ -51,7 +51,7 @@ Test files must end in `_test.sg`. The test runner automatically discovers all t
 
 ```
 my_project/
-├── sage.toml
+├── grove.toml
 └── src/
     ├── main.sg
     ├── utils.sg
