@@ -15,6 +15,7 @@
 - [Functions](./language/functions.md)
 - [Generics](./language/generics.md)
 - [Control Flow](./language/control-flow.md)
+- [Error Handling](./language/error-handling.md)
 
 # Agents
 
@@ -42,6 +43,10 @@
 - [Assertions](./testing/assertions.md)
 - [Mocking](./testing/mocking.md)
 
+# Observability
+
+- [Overview](./observability/overview.md)
+
 # Editors
 
 - [Overview](./editors/overview.md)
@@ -53,3 +58,4 @@
 - [CLI Commands](./reference/cli.md)
 - [Environment Variables](./reference/environment.md)
 - [Error Codes](./reference/errors.md)
+- [Standard Library](./reference/stdlib.md)
