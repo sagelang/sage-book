@@ -64,6 +64,60 @@ Maximum retries for structured output parsing. When `infer` returns a type other
 export SAGE_INFER_RETRIES="5"
 ```
 
+## Tool Configuration
+
+These variables configure built-in tools used by agents.
+
+### SAGE_HTTP_TIMEOUT
+
+HTTP request timeout in seconds. Default: `30`
+
+```bash
+export SAGE_HTTP_TIMEOUT="60"
+```
+
+### SAGE_DATABASE_URL
+
+Database connection URL for the `Database` tool. Required when using database features.
+
+```bash
+# SQLite
+export SAGE_DATABASE_URL="sqlite:./data.db"
+export SAGE_DATABASE_URL="sqlite::memory:"
+
+# PostgreSQL
+export SAGE_DATABASE_URL="postgres://user:password@localhost/dbname"
+
+# MySQL
+export SAGE_DATABASE_URL="mysql://user:password@localhost/dbname"
+```
+
+### SAGE_FS_ROOT
+
+Root directory for `Fs` tool operations. All file paths are relative to this directory. Default: `.` (current directory)
+
+```bash
+export SAGE_FS_ROOT="/var/data/myapp"
+```
+
+## Observability
+
+### SAGE_TRACE
+
+Enable trace output to stderr. Set to `1` to enable.
+
+```bash
+export SAGE_TRACE=1
+```
+
+### SAGE_TRACE_FILE
+
+Write trace output to a file instead of stderr.
+
+```bash
+export SAGE_TRACE_FILE="trace.log"
+```
+
 ## Compiler Configuration
 
 ### SAGE_TOOLCHAIN

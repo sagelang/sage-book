@@ -28,8 +28,9 @@ run Fetcher;
 | Tool | Description |
 |------|-------------|
 | [Http](./http.md) | HTTP client for web requests |
-
-More tools are planned for future releases (Fs, Kv, Browser, etc.).
+| [Database](./database.md) | SQL database client (SQLite, PostgreSQL, MySQL) |
+| [Fs](./filesystem.md) | Filesystem operations (read, write, list, delete) |
+| [Shell](./shell.md) | Execute shell commands |
 
 ## Error Handling
 
@@ -52,3 +53,5 @@ Tools can be configured via environment variables:
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `SAGE_HTTP_TIMEOUT` | HTTP request timeout in seconds | `30` |
+| `SAGE_DATABASE_URL` | Database connection URL | (required for Database tool) |
+| `SAGE_FS_ROOT` | Root directory for filesystem operations | `.` |

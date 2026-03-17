@@ -35,6 +35,9 @@
 
 - [Built-in Tools](./tools/overview.md)
 - [HTTP Client](./tools/http.md)
+- [Database](./tools/database.md)
+- [Filesystem](./tools/filesystem.md)
+- [Shell](./tools/shell.md)
 
 # Testing
 
