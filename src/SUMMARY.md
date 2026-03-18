@@ -21,6 +21,7 @@
 
 - [What Are Agents?](./agents/overview.md)
 - [Agent State](./agents/beliefs.md)
+- [Persistent Beliefs](./agents/persistence.md)
 - [Event Handlers](./agents/handlers.md)
 - [Spawning & Awaiting](./agents/summoning.md)
 - [Messaging](./agents/messaging.md)
@@ -45,6 +46,13 @@
 - [Writing Tests](./testing/writing-tests.md)
 - [Assertions](./testing/assertions.md)
 - [Mocking](./testing/mocking.md)
+
+# Steward Architecture
+
+- [The Steward Pattern](./steward/pattern.md)
+- [Supervision Trees](./steward/supervision.md)
+- [Session Types](./steward/sessions.md)
+- [Lifecycle Hooks](./steward/lifecycle.md)
 
 # Observability
 

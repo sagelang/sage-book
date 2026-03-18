@@ -794,6 +794,25 @@ Convert a value to JSON string.
 json_stringify("hello")  // "\"hello\""
 ```
 
+### Generic Deserialization
+
+**Note:** Generic `from_json<T>` deserialization is not currently available in Sage. This would require runtime type information, which isn't supported by the current architecture where Sage compiles to Rust with monomorphised generics.
+
+**Workaround:** Use the `json_get_*` functions to extract typed fields from JSON strings:
+
+```sage
+// Instead of: let user: User = from_json(json);
+// Do this:
+let name = unwrap_or(json_get(json, "name"), "");
+let age = unwrap_or(json_get_int(json, "age"), 0);
+let active = unwrap_or(json_get_bool(json, "active"), false);
+
+// Build your record manually
+let user = User { name: name, age: age, active: active };
+```
+
+For complex nested structures, extract fields level by level or use `Inferred<T>` with LLM parsing if appropriate.
+
 ---
 
 ## Map Functions
