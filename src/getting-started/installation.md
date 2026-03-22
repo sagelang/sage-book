@@ -59,7 +59,7 @@ sage --version
 You should see output like:
 
 ```
-sage 1.0.1
+sage 2.0.1
 ```
 
 ## Next Steps

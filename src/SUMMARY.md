@@ -16,6 +16,7 @@
 - [Generics](./language/generics.md)
 - [Control Flow](./language/control-flow.md)
 - [Error Handling](./language/error-handling.md)
+- [Extern Functions (Rust FFI)](./language/extern-fns.md)
 
 # Agents
 
@@ -70,3 +71,4 @@
 - [Environment Variables](./reference/environment.md)
 - [Error Codes](./reference/errors.md)
 - [Standard Library](./reference/stdlib.md)
+- [grove.toml](./reference/grove-toml.md)
