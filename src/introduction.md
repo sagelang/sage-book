@@ -48,7 +48,7 @@ run Coordinator;
 
 **Type-safe LLM integration.** The `divine` expression lets you call LLMs with structured output. The type system ensures you handle divination results correctly.
 
-**Compiles to native binaries.** Sage compiles to Rust, then to native code. Your agent programs are fast, self-contained binaries with no runtime dependencies.
+**Compiles to native binaries and WebAssembly.** Sage compiles to Rust, then to native code or WebAssembly. Your agent programs are fast, self-contained binaries — or run directly in the browser. Try it now in the [online playground](https://sagelang.github.io/sage-playground/).
 
 **Concurrent by default.** Spawned agents run concurrently. The runtime handles scheduling and message passing.
 
@@ -64,6 +64,7 @@ This guide covers:
 4. **LLM Integration** — Using `divine` to call language models
 5. **Tools** — Built-in tools like HTTP for external services
 6. **Testing** — Write tests with first-class LLM mocking
-7. **Reference** — CLI commands, environment variables, error codes
+7. **WebAssembly** — Compile agents for the browser and use the online playground
+8. **Reference** — CLI commands, environment variables, error codes
 
 Let's get started with [installation](./getting-started/installation.md).

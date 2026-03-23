@@ -65,6 +65,11 @@
 - [Zed](./editors/zed.md)
 - [VS Code](./editors/vscode.md)
 
+# WebAssembly
+
+- [WASM Target](./wasm/target.md)
+- [Online Playground](./wasm/playground.md)
+
 # Reference
 
 - [CLI Commands](./reference/cli.md)

@@ -81,11 +81,12 @@ sage build program.sg
 | `--release` | Build with optimizations |
 | `-o, --output <dir>` | Output directory (default: `hearth`) |
 | `--emit-rust` | Only generate Rust code, don't compile |
+| `--target <target>` | Compilation target: `native` (default), `web`, or `wasm` |
 
 ### Examples
 
 ```bash
-# Build a binary
+# Build a native binary
 sage build hello.sg
 
 # Build with optimizations
@@ -96,17 +97,28 @@ sage build hello.sg -o ./out
 
 # Generate Rust code only (for inspection)
 sage build hello.sg --emit-rust
+
+# Build for WebAssembly
+sage build hello.sg --target web
 ```
 
 ### Output Structure
 
-After building, you'll find:
+After building a native target, you'll find:
 
 ```
 hearth/
   hello/
     main.rs      # Generated Rust code
     hello        # Native binary (if not --emit-rust)
+```
+
+After building a WASM target (`--target web`):
+
+```
+pkg/
+  hello.js          # JavaScript glue (wasm-bindgen)
+  hello_bg.wasm     # WebAssembly binary
 ```
 
 ## sage check
