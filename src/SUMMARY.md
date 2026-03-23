@@ -70,6 +70,10 @@
 - [WASM Target](./wasm/target.md)
 - [Online Playground](./wasm/playground.md)
 
+# Community
+
+- [Oswyn — Your Sage Companion](./community/oswyn.md)
+
 # Reference
 
 - [CLI Commands](./reference/cli.md)

@@ -67,4 +67,6 @@ This guide covers:
 7. **WebAssembly** — Compile agents for the browser and use the online playground
 8. **Reference** — CLI commands, environment variables, error codes
 
+Prefer to learn by asking questions? [Chat with Oswyn](https://sagelang.github.io/oswyn/), the AI-powered Sage companion that runs in your browser.
+
 Let's get started with [installation](./getting-started/installation.md).
