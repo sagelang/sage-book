@@ -257,7 +257,7 @@ const DEFAULT_NAME: String = "anonymous";
 
 ### Agent\<T\>
 
-A handle to a spawned agent that will emit a value of type `T`:
+A handle to a summoned agent that will yield a value of type `T`:
 
 ```sage
 agent Worker {
@@ -281,9 +281,9 @@ agent Main {
 run Main;
 ```
 
-### Inferred\<T\>
+### Oracle\<T\>
 
-The result of an LLM inference call:
+The result of a `divine` call:
 
 ```sage
 let summary = try divine("Summarize: {topic}");

@@ -11,7 +11,7 @@ Agent-based systems are notoriously hard to test:
 
 Sage's testing framework solves these problems with:
 - **First-class LLM mocking** — deterministic tests without network calls
-- **Async-aware test bodies** — `spawn` and `await` work naturally in tests
+- **Async-aware test bodies** — `summon` and `await` work naturally in tests
 - **Concurrent execution** — tests run in parallel by default for speed
 
 ## Quick Start
@@ -63,4 +63,4 @@ my_project/
 
 - [Writing Tests](./writing-tests.md) — test syntax and best practices
 - [Assertions](./assertions.md) — available assertion functions
-- [Mocking LLMs](./mocking.md) — how to mock `infer` calls
+- [Mocking LLMs](./mocking.md) — how to mock `divine` calls

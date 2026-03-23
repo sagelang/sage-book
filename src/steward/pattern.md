@@ -117,7 +117,7 @@ The key pattern is **declarative change propagation**:
 2. `DatabaseSteward` applies the migration via `Database.execute`
 3. `DatabaseSteward` increments `schema_version` (checkpointed)
 4. `DatabaseSteward` sends `SchemaChanged(change)` to `APISteward`
-5. `APISteward` receives, regenerates affected routes via `infer`
+5. `APISteward` receives, regenerates affected routes via `divine`
 6. `APISteward` increments `route_version` (checkpointed)
 7. `APISteward` sends `RouteChanged(change)` to `FrontendSteward`
 8. `FrontendSteward` regenerates affected components

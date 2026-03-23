@@ -4,14 +4,14 @@ Sage's testing framework provides first-class mocking for both LLM calls and too
 
 ## Mocking LLM Calls
 
-You can specify exactly what `infer` calls should return using `mock divine`.
+You can specify exactly what `divine` calls should return using `mock divine`.
 
 ## Basic Mocking
 
-Use `mock divine -> value;` to specify what the next `infer` call should return:
+Use `mock divine -> value;` to specify what the next `divine` call should return:
 
 ```sage
-test "infer returns mocked value" {
+test "divine returns mocked value" {
     mock divine -> "This is a mocked response";
 
     let result: String = try divine("Summarise something");
@@ -19,14 +19,14 @@ test "infer returns mocked value" {
 }
 ```
 
-The mock is consumed by the `infer` call — each mock is used exactly once.
+The mock is consumed by the `divine` call — each mock is used exactly once.
 
 ## Multiple Mocks
 
-When your test makes multiple `infer` calls, queue up multiple mocks in order:
+When your test makes multiple `divine` calls, queue up multiple mocks in order:
 
 ```sage
-test "multiple infer calls" {
+test "multiple divine calls" {
     mock divine -> "First response";
     mock divine -> "Second response";
     mock divine -> "Third response";
@@ -45,7 +45,7 @@ Mocks are consumed in FIFO order (first in, first out).
 
 ## Mocking Structured Output
 
-For typed `infer` calls, mock with the appropriate record structure:
+For typed `divine` calls, mock with the appropriate record structure:
 
 ```sage
 record Summary {
@@ -53,7 +53,7 @@ record Summary {
     confidence: Float,
 }
 
-test "structured infer returns typed mock" {
+test "structured divine returns typed mock" {
     mock divine -> Summary {
         text: "Quantum computing is fast.",
         confidence: 0.88
@@ -67,10 +67,10 @@ test "structured infer returns typed mock" {
 
 ## Mocking Failures
 
-Use `fail("message")` to mock an `infer` failure:
+Use `fail("message")` to mock a `divine` failure:
 
 ```sage
-test "agent handles infer failure" {
+test "agent handles divine failure" {
     mock divine -> fail("rate limit exceeded");
 
     let handle = summon ResilientResearcher { topic: "test" };
@@ -85,7 +85,7 @@ This is essential for testing error handling paths.
 
 ## Testing Agents with Mocks
 
-When testing agents that use `infer`, mocks are consumed by the agent's `infer` calls:
+When testing agents that use `divine`, mocks are consumed by the agent's `divine` calls:
 
 ```sage
 agent Researcher {
@@ -111,7 +111,7 @@ test "researcher emits summary" {
 
 ## Testing Multi-Agent Systems
 
-For agents that summon other agents, each agent's `infer` calls consume mocks in execution order:
+For agents that summon other agents, each agent's `divine` calls consume mocks in execution order:
 
 ```sage
 test "coordinator gets results from two researchers" {
@@ -130,13 +130,13 @@ test "coordinator gets results from two researchers" {
 
 ## Mock Queue Exhaustion
 
-If an `infer` call is made without an available mock, the test fails with error code E054:
+If a `divine` call is made without an available mock, the test fails with error code E054:
 
 ```
-Error: infer called with no mock available (E054)
+Error: divine called with no mock available (E054)
 ```
 
-Always provide enough mocks for all `infer` calls in your test.
+Always provide enough mocks for all `divine` calls in your test.
 
 ## Mocking Tool Calls
 
@@ -239,4 +239,4 @@ test "fetcher returns body" {
 2. **Descriptive mock values** — make it clear what's being tested
 3. **Test error paths** — use `fail()` to test error handling
 4. **Keep mocks simple** — avoid complex JSON in mocks when possible
-5. **Mock all external calls** — both `infer` and tool calls should be mocked for deterministic tests
+5. **Mock all external calls** — both `divine` and tool calls should be mocked for deterministic tests

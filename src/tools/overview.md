@@ -248,7 +248,7 @@ test "handles API response" {
     };
 
     // Agent under test will receive the mocked response
-    let agent = spawn DataFetcher {};
+    let agent = summon DataFetcher {};
     let result = await(agent);
     assert_eq(result, 200);
 }
@@ -256,7 +256,7 @@ test "handles API response" {
 test "handles API failure" {
     mock tool Http.get -> fail("connection refused");
 
-    let agent = spawn DataFetcher {};
+    let agent = summon DataFetcher {};
     let result = await(agent);
     assert_eq(result, -1);  // Error handler returns -1
 }

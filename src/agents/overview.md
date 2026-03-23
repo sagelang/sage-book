@@ -8,7 +8,7 @@ Think of an agent as a small, focused worker:
 - It has **state** (its private fields)
 - It responds to **events** (start, messages, errors)
 - It can **summon** other agents
-- It **emits** a result when done
+- It **yields** a result when done
 
 ```sage
 agent Worker {
@@ -34,10 +34,10 @@ Threads are low-level and share memory. Agents are high-level and communicate th
 
 ## Agent Lifecycle
 
-1. **Spawn** — Agent is created with initial state
+1. **Summon** — Agent is created with initial state
 2. **Start** — The `on start` handler runs
 3. **Running** — Agent can receive messages, summon other agents
-4. **Emit** — Agent produces its result
+4. **Yield** — Agent produces its result
 5. **Done** — Agent terminates
 
 ```
@@ -55,7 +55,7 @@ summon Worker { task: "..." }
         │
         ▼
     ┌──────┐
-    │ emit │ ─── yield(value)
+    │yield │ ─── yield(value)
     └──────┘
 ```
 

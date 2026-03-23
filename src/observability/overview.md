@@ -1,6 +1,6 @@
 # Observability
 
-Production steward programs need visibility. When an agent crashes, you need to know what it was doing. When an `infer` call takes 8 seconds, you need to know which agent called it. When a migration fails, you need the full context.
+Production steward programs need visibility. When an agent crashes, you need to know what it was doing. When a `divine` call takes 8 seconds, you need to know which agent called it. When a migration fails, you need the full context.
 
 Sage v2.0 provides structured observability as a first-class language feature.
 
@@ -233,7 +233,7 @@ sage trace filter trace.ndjson --after 0.5 --before 1.0
 ### LLM Analysis
 
 ```bash
-sage trace infer trace.ndjson
+sage trace divine trace.ndjson
 ```
 
 Output:
@@ -346,7 +346,7 @@ service_name = "production-steward"
 Use trace analysis to understand LLM usage:
 
 ```bash
-sage trace infer production-trace.ndjson
+sage trace divine production-trace.ndjson
 # Identify slow calls, high token counts, failure patterns
 ```
 

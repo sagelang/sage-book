@@ -83,7 +83,7 @@ test "summariser returns LLM response" {
 
 ## Test Body Semantics
 
-Test bodies are async by default — you can use `await` and `spawn` without special syntax:
+Test bodies are async by default — you can use `await` and `summon` without special syntax:
 
 ```sage
 test "two agents can run concurrently" {

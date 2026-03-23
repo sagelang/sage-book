@@ -1,8 +1,8 @@
 # Spawning & Awaiting
 
-Agents are created with `spawn` and their results are retrieved with `await`.
+Agents are created with `summon` and their results are retrieved with `await`.
 
-## spawn
+## summon
 
 Creates a new agent and returns a handle:
 
@@ -12,7 +12,7 @@ let worker = summon Worker { task: "process data" };
 
 The spawned agent starts running immediately and concurrently with the spawning agent.
 
-### Spawn Syntax
+### Summon Syntax
 
 ```sage
 summon AgentName { field1: value1, field2: value2 }
@@ -39,7 +39,7 @@ let p = summon Point { x: 10 };
 
 ### Agent Handle Type
 
-`spawn` returns an `Agent<T>` where `T` is the emit type:
+`summon` returns an `Agent<T>` where `T` is the yield type:
 
 ```sage
 agent Worker {
@@ -53,7 +53,7 @@ let w: Agent<Int> = summon Worker {};
 
 ## await
 
-Waits for an agent to emit its result. Since agents can fail, `await` is a fallible operation that requires `try`:
+Waits for an agent to yield its result. Since agents can fail, `await` is a fallible operation that requires `try`:
 
 ```sage
 let worker = summon Worker {};
@@ -62,7 +62,7 @@ let result = try await worker;  // Blocks until Worker emits
 
 ### Await Type
 
-`await` returns the type that the agent emits:
+`await` returns the type that the agent yields:
 
 ```sage
 agent StringWorker {

@@ -78,7 +78,7 @@ Research complete!
 
 4. **`summon Researcher { topic: "..." }`** — Creates a new `Researcher` agent with the given field value.
 
-5. **`try await r`** — Waits for the agent to emit its result. The spawned agent runs concurrently until awaited.
+5. **`try await r`** — Waits for the agent to yield its result. The summoned agent runs concurrently until awaited.
 
 ## Multiple Agents
 

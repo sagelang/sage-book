@@ -4,7 +4,7 @@ Sage uses environment variables to configure LLM integration and the compiler.
 
 ## LLM Configuration
 
-These variables configure the `infer` expression.
+These variables configure the `divine` expression.
 
 ### SAGE_API_KEY
 
@@ -58,7 +58,7 @@ export SAGE_TIMEOUT_MS="60000"
 
 ### SAGE_INFER_RETRIES
 
-Maximum retries for structured output parsing. When `infer` returns a type other than `String`, the runtime parses the LLM's response as JSON. If parsing fails, it retries with error feedback. Default: `3`
+Maximum retries for structured output parsing. When `divine` returns a type other than `String`, the runtime parses the LLM's response as JSON. If parsing fails, it retries with error feedback. Default: `3`
 
 ```bash
 export SAGE_INFER_RETRIES="5"

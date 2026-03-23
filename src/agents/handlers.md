@@ -69,11 +69,11 @@ See [Messaging](./messaging.md) for details.
 
 1. `on start` runs first, exactly once
 2. `on error` runs if a `try` expression fails
-3. After `emit`, the agent terminates
+3. After `yield`, the agent terminates
 
-## emit
+## yield
 
-The `emit` expression signals that the agent has produced its result:
+The `yield` expression signals that the agent has produced its result:
 
 ```sage
 agent Calculator {
@@ -87,14 +87,14 @@ agent Calculator {
 }
 ```
 
-After `emit`:
+After `yield`:
 - The agent's result is available to whoever awaited it
 - The agent proceeds to cleanup (`on stop`)
 - No more messages are processed
 
-## Emit Type Consistency
+## Yield Type Consistency
 
-All `emit` calls in an agent must have the same type:
+All `yield` calls in an agent must have the same type:
 
 ```sage
 agent Example {

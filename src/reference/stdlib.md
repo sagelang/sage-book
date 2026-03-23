@@ -811,7 +811,7 @@ let active = unwrap_or(json_get_bool(json, "active"), false);
 let user = User { name: name, age: age, active: active };
 ```
 
-For complex nested structures, extract fields level by level or use `Inferred<T>` with LLM parsing if appropriate.
+For complex nested structures, extract fields level by level or use `Oracle<T>` with LLM parsing if appropriate.
 
 ---
 

@@ -272,7 +272,7 @@ sage trace summary trace.ndjson
 sage trace filter trace.ndjson --agent Researcher
 
 # See all LLM calls
-sage trace infer trace.ndjson
+sage trace divine trace.ndjson
 
 # Estimate costs (experimental)
 sage trace cost trace.ndjson

@@ -46,7 +46,7 @@ run Coordinator;
 
 **Agents as primitives, not patterns.** Most agent frameworks are libraries that impose patterns on top of a general-purpose language. Sage makes agents a first-class concept — the compiler understands what an agent is, what state it holds, and how agents communicate.
 
-**Type-safe LLM integration.** The `infer` expression lets you call LLMs with structured output. The type system ensures you handle inference results correctly.
+**Type-safe LLM integration.** The `divine` expression lets you call LLMs with structured output. The type system ensures you handle divination results correctly.
 
 **Compiles to native binaries.** Sage compiles to Rust, then to native code. Your agent programs are fast, self-contained binaries with no runtime dependencies.
 
