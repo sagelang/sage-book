@@ -740,6 +740,36 @@ map_option(Some(2), |x: Int| x * 2)  // Some(4)
 map_option(None, |x: Int| x * 2)     // None
 ```
 
+#### `str_truncate(s, max_len) -> String`
+Truncate a string to a maximum length, appending "..." if truncated. Unicode-aware.
+
+```sage
+str_truncate("hello", 10)          // "hello" (no truncation)
+str_truncate("hello world", 8)     // "hello..." (5 chars + "...")
+str_truncate("hello", 5)           // "hello" (exact length, no truncation)
+str_truncate("héllo wörld", 8)     // "héllo..." (Unicode-aware)
+```
+
+---
+
+## Environment Functions
+
+#### `env(key) -> Option<String>`
+Get an environment variable. Returns `None` if not set.
+
+```sage
+let home = env("HOME");          // Some("/Users/alice")
+let missing = env("NONEXISTENT"); // None
+```
+
+#### `env_or(key, default) -> String`
+Get an environment variable, returning a default if not set.
+
+```sage
+let port = env_or("PORT", "8080");       // "8080" if PORT not set
+let home = env_or("HOME", "/home/user"); // actual HOME value
+```
+
 ---
 
 ## JSON Functions
@@ -792,6 +822,16 @@ Convert a value to JSON string.
 
 ```sage
 json_stringify("hello")  // "\"hello\""
+```
+
+#### `json_escape(s) -> String`
+Escape JSON special characters in a string without wrapping in quotes.
+
+```sage
+json_escape("hello")            // "hello"
+json_escape("say \"hi\"")       // "say \\\"hi\\\""
+json_escape("line\nbreak")      // "line\\nbreak"
+json_escape("tab\there")        // "tab\\there"
 ```
 
 ### Generic Deserialization

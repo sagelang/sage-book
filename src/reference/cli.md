@@ -301,6 +301,46 @@ Trace files use NDJSON (newline-delimited JSON) format. Each line is a JSON obje
 {"t":151,"kind":"agent_emit","agent":"Main","value":"Hello"}
 ```
 
+## sage tools
+
+Manage and inspect MCP tool servers configured in `grove.toml`:
+
+```bash
+sage tools <subcommand>
+```
+
+### Subcommands
+
+| Subcommand | Description |
+|------------|-------------|
+| `list` | List configured MCP tools from `grove.toml` |
+| `inspect --stdio <cmd>` | Inspect a stdio server's tool manifest |
+| `inspect --http <url>` | Inspect an HTTP server's tool manifest |
+| `generate --stdio <cmd> -o <file>` | Generate Sage `tool` declarations from a server |
+| `generate --http <url> -o <file>` | Generate from an HTTP server |
+
+### Examples
+
+```bash
+# List tools configured in grove.toml
+sage tools list
+
+# Inspect a server to see available tools
+sage tools inspect --stdio "npx -y @modelcontextprotocol/server-github"
+sage tools inspect --http "https://mcp.example.com/mcp"
+
+# Generate Sage declarations from a server manifest
+sage tools generate --stdio "npx -y @modelcontextprotocol/server-github" -o src/tools/github.sg
+```
+
+### Verification
+
+Use `sage check --verify-tools` to verify that declared tool signatures match the actual MCP server manifest:
+
+```bash
+sage check --verify-tools
+```
+
 ## sage sense
 
 Start the Language Server Protocol (LSP) server for editor integration:

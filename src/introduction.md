@@ -62,7 +62,7 @@ This guide covers:
 2. **Language Guide** — Syntax, types, and control flow
 3. **Agents** — State, handlers, summoning, and messaging
 4. **LLM Integration** — Using `divine` to call language models
-5. **Tools** — Built-in tools like HTTP for external services
+5. **Tools** — Built-in tools like HTTP, and MCP integration for external services
 6. **Testing** — Write tests with first-class LLM mocking
 7. **WebAssembly** — Compile agents for the browser and use the online playground
 8. **Reference** — CLI commands, environment variables, error codes

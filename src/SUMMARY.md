@@ -40,6 +40,7 @@
 - [Database](./tools/database.md)
 - [Filesystem](./tools/filesystem.md)
 - [Shell](./tools/shell.md)
+- [MCP Integration](./tools/mcp.md)
 
 # Testing
 

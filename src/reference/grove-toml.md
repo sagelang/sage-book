@@ -125,6 +125,58 @@ my-crate = { git = "https://github.com/user/crate" }
 
 These are added to the generated Cargo.toml alongside `sage-runtime`.
 
+## [tools.X]
+
+Configure MCP (Model Context Protocol) tool servers. Each tool gets its own `[tools.X]` section where `X` matches the `tool` declaration name in your Sage code.
+
+### Stdio Transport
+
+```toml
+[tools.Github]
+transport = "stdio"
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-github"]
+timeout_ms = 30000
+connect_timeout_ms = 10000
+
+[tools.Github.env]
+GITHUB_PERSONAL_ACCESS_TOKEN = "$GITHUB_TOKEN"
+```
+
+| Field | Default | Description |
+|-------|---------|-------------|
+| `transport` | — | `"stdio"` for subprocess servers |
+| `command` | — | Executable to launch |
+| `args` | `[]` | Command arguments |
+| `timeout_ms` | `30000` | Per-call timeout in milliseconds |
+| `connect_timeout_ms` | `10000` | Connection timeout in milliseconds |
+
+Environment variables in `[tools.X.env]` starting with `$` are resolved from the host environment.
+
+### HTTP Transport
+
+```toml
+[tools.Slack]
+transport = "http"
+url = "https://mcp.slack.example.com/mcp"
+timeout_ms = 30000
+auth = "bearer"
+token_env = "SLACK_MCP_TOKEN"
+```
+
+| Field | Default | Description |
+|-------|---------|-------------|
+| `transport` | — | `"http"` for remote servers |
+| `url` | — | Server endpoint URL |
+| `auth` | — | `"bearer"` or `"oauth"` |
+| `token_env` | — | Environment variable name for bearer token |
+| `client_id_env` | — | Environment variable for OAuth client ID |
+| `authorization_url` | — | OAuth authorization endpoint |
+| `token_url` | — | OAuth token endpoint |
+| `scopes` | `[]` | OAuth scopes |
+
+See [MCP Integration](../tools/mcp.md) for full documentation.
+
 ## Complete Example
 
 ```toml
@@ -142,6 +194,14 @@ path = ".sage/checkpoints.db"
 [supervision]
 max_restarts = 5
 restart_window_s = 60
+
+[tools.Github]
+transport = "stdio"
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-github"]
+
+[tools.Github.env]
+GITHUB_PERSONAL_ACCESS_TOKEN = "$GITHUB_TOKEN"
 
 [extern]
 modules = ["src/sage_extern.rs"]
